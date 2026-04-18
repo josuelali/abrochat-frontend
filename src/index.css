@@ -1,0 +1,129 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+@layer base {
+  :root {
+    --background: 230 30% 4%;
+    --foreground: 220 20% 92%;
+
+    --card: 230 20% 12%;
+    --card-foreground: 220 20% 92%;
+
+    --popover: 230 20% 12%;
+    --popover-foreground: 220 20% 92%;
+
+    --primary: 230 80% 62%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 270 60% 55%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 230 15% 18%;
+    --muted-foreground: 180 60% 65%;
+
+    --accent: 270 80% 65%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 230 15% 20%;
+    --input: 230 15% 20%;
+    --ring: 230 80% 62%;
+
+    --radius: 0.75rem;
+
+    --gradient-metallic: linear-gradient(135deg, hsl(230 80% 62%), hsl(270 60% 55%));
+    --gradient-card: linear-gradient(160deg, hsl(230 20% 14%), hsl(270 15% 12%));
+    --gradient-premium: linear-gradient(135deg, hsl(45 90% 55%), hsl(30 85% 50%));
+    --gradient-premium-card: linear-gradient(160deg, hsl(270 25% 16%), hsl(230 30% 14%));
+    --glow-primary: 0 0 30px hsl(230 80% 62% / 0.3);
+    --glow-accent: 0 0 30px hsl(270 80% 65% / 0.3);
+    --glow-premium: 0 0 40px hsl(45 90% 55% / 0.25);
+
+    --sidebar-background: 230 25% 7%;
+    --sidebar-foreground: 220 20% 92%;
+    --sidebar-primary: 230 80% 62%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 270 80% 65%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 230 15% 20%;
+    --sidebar-ring: 230 80% 62%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer utilities {
+  .gradient-metallic {
+    background: var(--gradient-metallic);
+  }
+
+  .gradient-card {
+    background: var(--gradient-card);
+  }
+
+  .gradient-premium {
+    background: var(--gradient-premium);
+  }
+
+  .gradient-premium-card {
+    background: var(--gradient-premium-card);
+  }
+
+  .glow-primary {
+    box-shadow: var(--glow-primary);
+  }
+
+  .glow-accent {
+    box-shadow: var(--glow-accent);
+  }
+
+  .glow-premium {
+    box-shadow: var(--glow-premium);
+  }
+
+  .text-gradient-metallic {
+    background: var(--gradient-metallic);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-premium {
+    background: var(--gradient-premium);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .snap-y-mandatory {
+    scroll-snap-type: y mandatory;
+  }
+
+  .snap-start {
+    scroll-snap-align: start;
+  }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
