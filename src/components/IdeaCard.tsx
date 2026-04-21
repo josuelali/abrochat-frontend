@@ -1,62 +1,135 @@
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { AssistantIdea } from "@/data/ideas";
+import { Heart, ExternalLink, Zap, Star } from "lucide-react";
+import type { Idea } from "@/data/ideas";
 
-type IdeaCardProps = {
-  idea: AssistantIdea;
-};
+interface IdeaCardProps {
+  idea: Idea;
+  isFavorite: boolean;
+  onToggleFavorite: (id: string) => void;
+}
 
-const categoryGlow: Record<AssistantIdea["category"], string> = {
-  estrategia: "from-fuchsia-500/20 via-transparent to-transparent",
-  ejecucion: "from-cyan-500/20 via-transparent to-transparent",
-  conversion: "from-amber-400/20 via-transparent to-transparent",
-};
+const IdeaCard = ({ idea, isFavorite, onToggleFavorite }: IdeaCardProps) => {
+  const cardClass = idea.isPremium
+    ? "gradient-premium-card glow-premium"
+    : "gradient-card glow-primary";
 
-export default function IdeaCard({ idea }: IdeaCardProps) {
-  const handleOpen = () => {
-    window.open(idea.href, "_blank", "noopener,noreferrer");
-  };
+  const titleClass = idea.isPremium
+    ? "text-gradient-premium"
+    : "text-gradient-metallic";
+
+  const ctaUrl = idea.ctaUrl || "https://abrochat.com";
+  const ctaText = idea.ctaText || "Ver cómo montarlo";
+  const microText = idea.microText || "👉 Desbloquea el sistema completo";
+  const disclaimerText =
+    idea.disclaimerText ||
+    'Esta es una idea básica. Descubre cómo montarlo paso a paso en Abrochat.';
+  const disclaimerLinkText = idea.disclaimerLinkText || "Abrochat";
 
   return (
-    <article
-      className={cn(
-        "group relative overflow-hidden rounded-[28px] border border-white/10 bg-[#24182b] p-6 shadow-[0_10px_40px_rgba(0,0,0,0.28)] transition-all duration-300 hover:-translate-y-1 hover:border-fuchsia-400/30 hover:shadow-[0_18px_50px_rgba(0,0,0,0.36)]",
-        idea.featured && "ring-1 ring-fuchsia-400/20"
-      )}
-    >
+    <div className="snap-start flex items-center justify-center h-[100dvh] w-full px-4 py-6">
       <div
-        className={cn(
-          "pointer-events-none absolute inset-0 bg-gradient-to-br opacity-70",
-          categoryGlow[idea.category]
+        className={`${cardClass} rounded-2xl p-6 w-full max-w-sm mx-auto border border-border relative overflow-hidden`}
+      >
+        <div
+          className="absolute inset-0 opacity-10 pointer-events-none rounded-2xl"
+          style={{
+            background: idea.isPremium
+              ? "radial-gradient(circle at 50% 0%, hsl(45 90% 55% / 0.3), transparent 60%)"
+              : "radial-gradient(circle at 50% 0%, hsl(230 80% 62% / 0.3), transparent 60%)",
+          }}
+        />
+
+        <button
+          onClick={() => onToggleFavorite(idea.id)}
+          className="absolute top-4 right-4 z-10 p-2 rounded-full bg-muted/50 backdrop-blur-sm transition-all active:scale-90"
+        >
+          <Heart
+            className={`w-5 h-5 transition-colors ${
+              isFavorite
+                ? "fill-red-500 text-red-500"
+                : "text-muted-foreground"
+            }`}
+          />
+        </button>
+
+        {idea.isPremium && (
+          <div className="flex items-center gap-1.5 mb-3">
+            <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+            <span className="text-xs font-semibold text-gradient-premium tracking-wider uppercase">
+              Premium
+            </span>
+          </div>
         )}
-      />
 
-      <div className="relative z-10 flex h-full flex-col">
-        <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-fuchsia-500/20 to-cyan-400/10 text-4xl shadow-inner shadow-white/5">
-          <span aria-hidden="true">{idea.icon}</span>
+        <h2
+          className={`text-xl font-extrabold leading-tight mb-5 pr-8 ${titleClass}`}
+        >
+          {idea.title}
+        </h2>
+
+        <div className="space-y-3 mb-5">
+          {idea.steps.map((step, i) => (
+            <div key={i} className="flex gap-3 items-start">
+              <div
+                className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${
+                  idea.isPremium
+                    ? "gradient-premium text-background"
+                    : "gradient-metallic text-primary-foreground"
+                }`}
+              >
+                {i + 1}
+              </div>
+              <p className="text-sm text-foreground/80 leading-relaxed pt-0.5">
+                {step}
+              </p>
+            </div>
+          ))}
         </div>
 
-        <h3 className="mb-3 text-[2rem] font-extrabold leading-none tracking-tight text-white">
-          {idea.name}
-        </h3>
+        <div className="flex flex-wrap gap-2 mb-5">
+          {idea.tools.map((tool) => (
+            <span
+              key={tool}
+              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-muted/60 text-xs font-medium text-foreground/70 border border-border/50"
+            >
+              <Zap className="w-3 h-3 text-primary" />
+              {tool}
+            </span>
+          ))}
+        </div>
 
-        <p className="mb-4 text-[1.05rem] font-bold uppercase leading-tight tracking-wide text-[#ffd400]">
-          {idea.subtitle}
+        <p className="text-xs text-center text-foreground/60 font-medium mb-2">
+          {microText}
         </p>
 
-        <p className="mb-8 text-[1.05rem] leading-relaxed text-white/90">
-          {idea.description}
-        </p>
+        <a
+          href={ctaUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`w-full flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-base transition-all active:scale-[0.97] ${
+            idea.isPremium
+              ? "gradient-premium text-background glow-premium"
+              : "gradient-metallic text-primary-foreground glow-primary"
+          }`}
+        >
+          <ExternalLink className="w-4 h-4" />
+          {ctaText}
+        </a>
 
-        <div className="mt-auto">
-          <Button
-            onClick={handleOpen}
-            className="w-full rounded-2xl bg-gradient-to-r from-fuchsia-600 to-pink-500 py-7 text-lg font-bold text-white transition-all duration-300 hover:scale-[1.01] hover:from-fuchsia-500 hover:to-pink-400"
+        <p className="text-[10px] text-muted-foreground text-center mt-4 leading-relaxed">
+          {disclaimerText}{" "}
+          <a
+            href={ctaUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-primary underline"
           >
-            {idea.cta}
-          </Button>
-        </div>
+            {disclaimerLinkText}
+          </a>
+          .
+        </p>
       </div>
-    </article>
+    </div>
   );
-}
+};
+
+export default IdeaCard;
