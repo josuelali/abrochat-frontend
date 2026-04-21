@@ -17,22 +17,23 @@ const featuredIdeas: Omit<Idea, "id">[] = [
     steps: [
       "Diseña una estructura de asistentes conectados para tu negocio",
       "Organiza ejecución, control y crecimiento desde un solo sistema",
-      "Convierte ideas sueltas en un sistema real con enfoque comercial"
+      "Convierte ideas sueltas en un sistema real con enfoque comercial",
     ],
     tools: ["SistemaMaestroIA", "Asistentes IA", "Automatización"],
     isPremium: true,
     ctaUrl: "https://sistemamaestroia.com",
     ctaText: "Abrir SistemaMaestroIA",
     microText: "👉 Entra al núcleo principal del ecosistema",
-    disclaimerText: "Accede al sistema principal para crear y organizar asistentes con IA en",
-    disclaimerLinkText: "SistemaMaestroIA"
+    disclaimerText:
+      "Accede al sistema principal para crear y organizar asistentes con IA en",
+    disclaimerLinkText: "SistemaMaestroIA",
   },
   {
     title: "💸 VendeConIA — encuentra oportunidades y conviértelas en ventas",
     steps: [
       "Detecta productos o ideas con potencial comercial",
       "Convierte oportunidades en contenido y propuesta de venta",
-      "Usa un flujo rápido para monetizar sin perder tiempo"
+      "Usa un flujo rápido para monetizar sin perder tiempo",
     ],
     tools: ["VendeConIA", "Contenido", "Monetización"],
     isPremium: false,
@@ -40,8 +41,8 @@ const featuredIdeas: Omit<Idea, "id">[] = [
     ctaText: "Abrir VendeConIA",
     microText: "👉 Activa una ruta rápida de monetización",
     disclaimerText: "Explora herramientas y flujos de venta inmediatos en",
-    disclaimerLinkText: "VendeConIA"
-  }
+    disclaimerLinkText: "VendeConIA",
+  },
 ];
 
 const regularIdeas: Omit<Idea, "id" | "isPremium">[] = [
@@ -50,108 +51,108 @@ const regularIdeas: Omit<Idea, "id" | "isPremium">[] = [
     steps: [
       "Conecta un chatbot a tu WhatsApp Business",
       "Configura respuestas automáticas con horarios disponibles",
-      "Integra con Google Calendar para confirmar citas"
+      "Integra con Google Calendar para confirmar citas",
     ],
-    tools: ["ManyChat", "Calendly"]
+    tools: ["ManyChat", "Calendly"],
   },
   {
     title: "Generador de contenido para redes sociales con IA",
     steps: [
       "Usa un prompt específico para tu nicho",
       "Genera 30 posts en menos de 10 minutos",
-      "Programa todo con una herramienta de scheduling"
+      "Programa todo con una herramienta de scheduling",
     ],
-    tools: ["ChatGPT", "Buffer"]
+    tools: ["ChatGPT", "Buffer"],
   },
   {
     title: "Asistente de email que responde clientes 24/7",
     steps: [
       "Entrena una IA con las preguntas frecuentes de tu negocio",
       "Conecta el asistente a tu correo empresarial",
-      "Revisa y aprueba respuestas automáticamente"
+      "Revisa y aprueba respuestas automáticamente",
     ],
-    tools: ["Zapier", "OpenAI API"]
+    tools: ["Zapier", "OpenAI API"],
   },
   {
     title: "Scraper de leads en LinkedIn con IA",
     steps: [
       "Define tu cliente ideal con filtros específicos",
       "Automatiza la extracción de perfiles relevantes",
-      "Envía mensajes personalizados con IA"
+      "Envía mensajes personalizados con IA",
     ],
-    tools: ["PhantomBuster", "Claude AI"]
+    tools: ["PhantomBuster", "Claude AI"],
   },
   {
     title: "Tienda dropshipping que se gestiona sola",
     steps: [
       "Usa IA para encontrar productos trending",
       "Automatiza descripciones y precios",
-      "Configura fulfillment automático"
+      "Configura fulfillment automático",
     ],
-    tools: ["Shopify", "AutoDS"]
+    tools: ["Shopify", "AutoDS"],
   },
   {
     title: "Traductor de documentos profesional con IA",
     steps: [
       "Sube documentos en cualquier idioma",
       "Procesa con IA manteniendo el formato",
-      "Entrega traducciones profesionales en minutos"
+      "Entrega traducciones profesionales en minutos",
     ],
-    tools: ["DeepL API", "Google Cloud"]
+    tools: ["DeepL API", "Google Cloud"],
   },
   {
     title: "Sistema de reseñas automáticas para negocios",
     steps: [
       "Envía SMS automáticos post-compra",
       "Genera respuestas inteligentes a reseñas",
-      "Publica las mejores en tus redes sociales"
+      "Publica las mejores en tus redes sociales",
     ],
-    tools: ["Twilio", "Make"]
+    tools: ["Twilio", "Make"],
   },
   {
     title: "Podcast generado con voces de IA",
     steps: [
       "Escribe guiones con ChatGPT sobre tu nicho",
       "Convierte texto a voz con IA realista",
-      "Publica y distribuye automáticamente"
+      "Publica y distribuye automáticamente",
     ],
-    tools: ["ElevenLabs", "Anchor"]
+    tools: ["ElevenLabs", "Anchor"],
   },
   {
     title: "Detector de oportunidades en marketplaces",
     steps: [
       "Escanea precios en Amazon y MercadoLibre",
       "Identifica productos con margen alto",
-      "Recibe alertas automáticas de oportunidades"
+      "Recibe alertas automáticas de oportunidades",
     ],
-    tools: ["Keepa", "Python"]
+    tools: ["Keepa", "Python"],
   },
   {
     title: "Generador de thumbnails virales con IA",
     steps: [
       "Analiza thumbnails exitosos de tu competencia",
       "Genera variaciones con IA de imágenes",
-      "Testea A/B para maximizar clicks"
+      "Testea A/B para maximizar clicks",
     ],
-    tools: ["Midjourney", "Canva"]
+    tools: ["Midjourney", "Canva"],
   },
   {
     title: "Chatbot de ventas para Instagram DMs",
     steps: [
       "Configura respuestas automáticas a palabras clave",
       "Califica leads con preguntas inteligentes",
-      "Envía links de pago automáticamente"
+      "Envía links de pago automáticamente",
     ],
-    tools: ["ManyChat", "Stripe"]
+    tools: ["ManyChat", "Stripe"],
   },
   {
     title: "Resumidor de reuniones con transcripción IA",
     steps: [
       "Graba reuniones de Zoom automáticamente",
       "Transcribe y resume puntos clave con IA",
-      "Envía resúmenes por email a participantes"
+      "Envía resúmenes por email a participantes",
     ],
-    tools: ["Otter.ai", "Notion"]
+    tools: ["Otter.ai", "Notion"],
   },
 ];
 
@@ -161,27 +162,27 @@ const premiumIdeas: Omit<Idea, "id" | "isPremium">[] = [
     steps: [
       "Crea un funnel automatizado de captación",
       "Implementa secuencias de email con IA",
-      "Configura pagos recurrentes automáticos"
+      "Configura pagos recurrentes automáticos",
     ],
-    tools: ["ClickFunnels", "ActiveCampaign"]
+    tools: ["ClickFunnels", "ActiveCampaign"],
   },
   {
     title: "💎 Agencia de marketing 100% automatizada",
     steps: [
       "Automatiza reportes de clientes con IA",
       "Genera contenido para múltiples marcas simultáneamente",
-      "Escala sin contratar más personal"
+      "Escala sin contratar más personal",
     ],
-    tools: ["GoHighLevel", "Jasper AI"]
+    tools: ["GoHighLevel", "Jasper AI"],
   },
   {
     title: "⚡ Bot de trading con señales de IA",
     steps: [
       "Entrena modelos con datos históricos del mercado",
       "Configura alertas automáticas de oportunidades",
-      "Ejecuta operaciones con gestión de riesgo automatizada"
+      "Ejecuta operaciones con gestión de riesgo automatizada",
     ],
-    tools: ["TradingView", "Python"]
+    tools: ["TradingView", "Python"],
   },
 ];
 
@@ -222,3 +223,5 @@ export function generateIdeasBatch(startIndex: number, count: number = 10): Idea
 
   return ideas.slice(0, count);
 }
+
+export const ideas: Idea[] = generateIdeasBatch(0, 20);
