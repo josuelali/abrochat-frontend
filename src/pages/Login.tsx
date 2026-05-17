@@ -7,6 +7,7 @@ interface LoginProps {
 
 const STRIPE_ABROCHAT_PRO = "https://buy.stripe.com/fZueVf4zyglmbfa57lgYU00";
 const BETA_DEADLINE = new Date("2026-05-22T06:15:00Z").getTime();
+const BETA_ACCESS_CODE = "ABRO-BETA-2026-X7K9";
 
 const formatCountdown = () => {
   const diff = BETA_DEADLINE - Date.now();
@@ -22,6 +23,8 @@ const formatCountdown = () => {
 
 const Login = ({ onLogin }: LoginProps) => {
   const [email, setEmail] = useState("");
+  const [betaCode, setBetaCode] = useState("");
+  const [showAccessForm, setShowAccessForm] = useState(false);
   const [message, setMessage] = useState("");
   const [countdown, setCountdown] = useState(formatCountdown());
 
@@ -32,9 +35,21 @@ const Login = ({ onLogin }: LoginProps) => {
 
   const handlePaidAccess = (e: React.FormEvent) => {
     e.preventDefault();
-    setMessage(
-      "Acceso beta manual: escribe el email usado en Stripe y espera confirmación. Todavía no hay acceso automático ni paywall definitivo."
-    );
+
+    if (!email.trim()) {
+      setMessage("Introduce el email usado en Stripe para validar tu acceso beta.");
+      return;
+    }
+
+    if (betaCode.trim() !== BETA_ACCESS_CODE) {
+      setMessage("Código no válido. Revisa el email de acceso o contacta con soporte.");
+      return;
+    }
+
+    // V1.1 acceso beta manual. No es paywall definitivo.
+    localStorage.setItem("abrochat_beta_access", "true");
+    localStorage.setItem("abrochat_user", email.trim());
+    onLogin(email.trim());
   };
 
   return (
@@ -85,24 +100,49 @@ const Login = ({ onLogin }: LoginProps) => {
           ⚡ Acceder a AbroChat Pro — 19 €
         </a>
 
-        <form onSubmit={handlePaidAccess} className="space-y-3 text-left">
-          <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-            Ya he pagado / tengo acceso beta
-          </label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="email usado en Stripe"
-            className="w-full px-4 py-3.5 rounded-xl bg-muted/50 border border-border text-foreground placeholder:text-muted-foreground/50 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
-          />
+        {!showAccessForm ? (
           <button
-            type="submit"
+            type="button"
+            onClick={() => {
+              setShowAccessForm(true);
+              setMessage("Introduce el email usado en Stripe y el código beta recibido por email.");
+            }}
             className="w-full py-3.5 rounded-xl border border-border text-foreground font-bold text-sm transition-all active:scale-[0.97]"
           >
-            Ver instrucciones de acceso manual
+            Ya he pagado / tengo acceso beta
           </button>
-        </form>
+        ) : (
+          <form onSubmit={handlePaidAccess} className="space-y-3 text-left">
+            <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+              Email usado en Stripe
+            </label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="email usado en Stripe"
+              className="w-full px-4 py-3.5 rounded-xl bg-muted/50 border border-border text-foreground placeholder:text-muted-foreground/50 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+            />
+
+            <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+              Código beta
+            </label>
+            <input
+              type="text"
+              value={betaCode}
+              onChange={(e) => setBetaCode(e.target.value)}
+              placeholder="ABRO-BETA-..."
+              className="w-full px-4 py-3.5 rounded-xl bg-muted/50 border border-border text-foreground placeholder:text-muted-foreground/50 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+            />
+
+            <button
+              type="submit"
+              className="w-full py-3.5 rounded-xl border border-border text-foreground font-bold text-sm transition-all active:scale-[0.97]"
+            >
+              Desbloquear acceso beta
+            </button>
+          </form>
+        )}
 
         {message && (
           <p className="rounded-xl bg-muted/60 px-4 py-3 text-xs leading-5 text-muted-foreground">
@@ -111,7 +151,7 @@ const Login = ({ onLogin }: LoginProps) => {
         )}
 
         <p className="text-[10px] leading-5 text-muted-foreground">
-          Este aviso no es un paywall definitivo. No hay webhook ni acceso automático todavía.
+          Este acceso por código es una solución beta manual. No es un paywall definitivo ni sustituye la futura verificación con Stripe webhook.
         </p>
       </div>
     </div>
