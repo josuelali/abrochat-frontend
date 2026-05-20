@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import logoAbrochat from "@/assets/logo-abrochat.png";
 
+declare global {
+  interface Window {
+    gtag?: (command: string, eventName: string, params?: Record<string, unknown>) => void;
+  }
+}
+
 interface LoginProps {
   onLogin: (email: string) => void;
 }
@@ -8,6 +14,16 @@ interface LoginProps {
 const STRIPE_ABROCHAT_PRO = "https://buy.stripe.com/fZueVf4zyglmbfa57lgYU00";
 const BETA_DEADLINE = new Date("2026-05-22T06:15:00Z").getTime();
 const BETA_ACCESS_CODE = "ABRO-BETA-2026-X7K9";
+const trackAbrochatAppEvent = (eventName: string, params: Record<string, unknown> = {}) => {
+  if (typeof window !== "undefined" && typeof window.gtag === "function") {
+    window.gtag("event", eventName, {
+      asset_name: "app_abrochat",
+      page_url: window.location.href,
+      ...params,
+    });
+  }
+};
+
 
 const formatCountdown = () => {
   const diff = BETA_DEADLINE - Date.now();
@@ -49,6 +65,10 @@ const Login = ({ onLogin }: LoginProps) => {
     // V1.1 acceso beta manual. No es paywall definitivo.
     localStorage.setItem("abrochat_beta_access", "true");
     localStorage.setItem("abrochat_user", email.trim());
+    trackAbrochatAppEvent("activation_complete", {
+      cta_location: "beta_access_form",
+      access_type: "manual_beta_code",
+    });
     onLogin(email.trim());
   };
 
@@ -96,6 +116,16 @@ const Login = ({ onLogin }: LoginProps) => {
           target="_blank"
           rel="noopener noreferrer"
           className="block w-full py-3.5 rounded-xl gradient-metallic text-primary-foreground font-bold text-sm glow-primary transition-all active:scale-[0.97]"
+          onClick={() =>
+            trackAbrochatAppEvent("begin_checkout", {
+              cta_text: "Acceder a AbroChat Pro — 19 €",
+              cta_location: "login_pricing",
+              destination_url: STRIPE_ABROCHAT_PRO,
+              product_name: "AbroChat Pro Beta",
+              value: 19,
+              currency: "EUR",
+            })
+          }
         >
           ⚡ Acceder a AbroChat Pro — 19 €
         </a>
@@ -104,6 +134,10 @@ const Login = ({ onLogin }: LoginProps) => {
           <button
             type="button"
             onClick={() => {
+              trackAbrochatAppEvent("beta_access_form_open", {
+                cta_text: "Ya he pagado / tengo acceso beta",
+                cta_location: "login_access",
+              });
               setShowAccessForm(true);
               setMessage("Introduce el email usado en Stripe y el código beta recibido por email.");
             }}
