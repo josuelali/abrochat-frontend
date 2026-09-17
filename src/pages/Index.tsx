@@ -2,11 +2,9 @@ import { useState } from "react";
 import Login from "./Login";
 import SwipeFeed from "@/components/SwipeFeed";
 import BottomNav from "@/components/BottomNav";
-import FavoritesView from "./FavoritesView";
-import HistoryView from "./HistoryView";
 import logoAbrochat from "@/assets/logo-abrochat.png";
 
-type Tab = "feed" | "favorites" | "history";
+type Tab = "feed";
 
 const Index = () => {
   const [user, setUser] = useState<string | null>(() =>
@@ -40,38 +38,6 @@ const Index = () => {
 
       <div className="pb-24">
         {activeTab === "feed" && <SwipeFeed />}
-
-        {activeTab === "favorites" && (
-          <div className="mx-auto max-w-5xl px-4 py-10 md:px-6">
-            <div className="rounded-3xl border border-white/10 bg-white/5 p-6 text-center shadow-[0_10px_30px_rgba(0,0,0,0.25)]">
-              <h2 className="mb-3 text-2xl font-bold text-white">Favoritos</h2>
-              <p className="text-white/75">
-                Esta sección la pulimos en el siguiente ajuste.
-              </p>
-            </div>
-            <div className="hidden">
-              <FavoritesView
-                ideas={[]}
-                favorites={new Set()}
-                onToggleFavorite={() => {}}
-              />
-            </div>
-          </div>
-        )}
-
-        {activeTab === "history" && (
-          <div className="mx-auto max-w-5xl px-4 py-10 md:px-6">
-            <div className="rounded-3xl border border-white/10 bg-white/5 p-6 text-center shadow-[0_10px_30px_rgba(0,0,0,0.25)]">
-              <h2 className="mb-3 text-2xl font-bold text-white">Historial</h2>
-              <p className="text-white/75">
-                Esta sección la pulimos en el siguiente ajuste.
-              </p>
-            </div>
-            <div className="hidden">
-              <HistoryView viewedIdeas={[]} />
-            </div>
-          </div>
-        )}
       </div>
 
       <BottomNav

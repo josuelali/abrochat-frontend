@@ -1,13 +1,11 @@
-import { Heart, ExternalLink, Zap, Star } from "lucide-react";
+import { ExternalLink, Zap, Star } from "lucide-react";
 import type { Idea } from "@/data/ideas";
 
 interface IdeaCardProps {
   idea: Idea;
-  isFavorite: boolean;
-  onToggleFavorite: (id: string) => void;
 }
 
-const IdeaCard = ({ idea, isFavorite, onToggleFavorite }: IdeaCardProps) => {
+const IdeaCard = ({ idea }: IdeaCardProps) => {
   const cardClass = idea.isPremium
     ? "gradient-premium-card glow-premium"
     : "gradient-card glow-primary";
@@ -16,13 +14,12 @@ const IdeaCard = ({ idea, isFavorite, onToggleFavorite }: IdeaCardProps) => {
     ? "text-gradient-premium"
     : "text-gradient-metallic";
 
-  const ctaUrl = idea.ctaUrl || "https://abrochat.com";
-  const ctaText = idea.ctaText || "Ver cómo montarlo";
-  const microText = idea.microText || "👉 Desbloquea el sistema completo";
-  const disclaimerText =
-    idea.disclaimerText ||
-    'Esta es una idea básica. Descubre cómo montarlo paso a paso en Abrochat.';
-  const disclaimerLinkText = idea.disclaimerLinkText || "Abrochat";
+  const hasCta = Boolean(idea.ctaUrl);
+  const ctaUrl = idea.ctaUrl;
+  const ctaText = idea.ctaText || "Abrir recurso";
+  const microText = idea.microText || "👉 Idea práctica para explorar y adaptar";
+  const disclaimerText = idea.disclaimerText;
+  const disclaimerLinkText = idea.disclaimerLinkText;
 
   return (
     <div className="snap-start flex items-center justify-center h-[100dvh] w-full px-4 py-6">
@@ -37,19 +34,6 @@ const IdeaCard = ({ idea, isFavorite, onToggleFavorite }: IdeaCardProps) => {
               : "radial-gradient(circle at 50% 0%, hsl(230 80% 62% / 0.3), transparent 60%)",
           }}
         />
-
-        <button
-          onClick={() => onToggleFavorite(idea.id)}
-          className="absolute top-4 right-4 z-10 p-2 rounded-full bg-muted/50 backdrop-blur-sm transition-all active:scale-90"
-        >
-          <Heart
-            className={`w-5 h-5 transition-colors ${
-              isFavorite
-                ? "fill-red-500 text-red-500"
-                : "text-muted-foreground"
-            }`}
-          />
-        </button>
 
         {idea.isPremium && (
           <div className="flex items-center gap-1.5 mb-3">
@@ -101,32 +85,30 @@ const IdeaCard = ({ idea, isFavorite, onToggleFavorite }: IdeaCardProps) => {
           {microText}
         </p>
 
-        <a
-          href={ctaUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`w-full flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-base transition-all active:scale-[0.97] ${
-            idea.isPremium
-              ? "gradient-premium text-background glow-premium"
-              : "gradient-metallic text-primary-foreground glow-primary"
-          }`}
-        >
-          <ExternalLink className="w-4 h-4" />
-          {ctaText}
-        </a>
+        {hasCta && ctaUrl && (
+          <>
+            <a
+              href={ctaUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`w-full flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-base transition-all active:scale-[0.97] ${
+                idea.isPremium
+                  ? "gradient-premium text-background glow-premium"
+                  : "gradient-metallic text-primary-foreground glow-primary"
+              }`}
+            >
+              <ExternalLink className="w-4 h-4" />
+              {ctaText}
+            </a>
 
-        <p className="text-[10px] text-muted-foreground text-center mt-4 leading-relaxed">
-          {disclaimerText}{" "}
-          <a
-            href={ctaUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-primary underline"
-          >
-            {disclaimerLinkText}
-          </a>
-          .
-        </p>
+            {disclaimerText && disclaimerLinkText && (
+              <p className="text-[10px] text-muted-foreground text-center mt-4 leading-relaxed">
+                {disclaimerText}{" "}
+                <span className="text-primary">{disclaimerLinkText}</span>.
+              </p>
+            )}
+          </>
+        )}
       </div>
     </div>
   );

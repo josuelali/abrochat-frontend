@@ -1,6 +1,6 @@
-import { Flame, Heart, Clock, LogOut } from "lucide-react";
+import { Flame, LogOut } from "lucide-react";
 
-type Tab = "feed" | "favorites" | "history";
+type Tab = "feed";
 
 interface BottomNavProps {
   activeTab: Tab;
@@ -10,9 +10,7 @@ interface BottomNavProps {
 
 const BottomNav = ({ activeTab, onChangeTab, onLogout }: BottomNavProps) => {
   const tabs: { id: Tab; icon: typeof Flame; label: string }[] = [
-    { id: "feed", icon: Flame, label: "Ideas" },
-    { id: "favorites", icon: Heart, label: "Favoritos" },
-    { id: "history", icon: Clock, label: "Historial" },
+    { id: "feed", icon: Flame, label: "Asistentes" },
   ];
 
   return (
